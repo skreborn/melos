@@ -601,7 +601,8 @@ The packages that caused the problem are:
     required List<Glob> packages,
     required List<Glob> ignore,
   }) async {
-    final pubspecEntities = await Stream.fromIterable(packages)
+    final root = Glob('.');
+    final pubspecEntities = await Stream.fromIterable([root, ...packages])
         .map(_createPubspecGlob)
         .asyncExpand((pubspecGlob) => pubspecGlob.list(root: workspacePath))
         .toList();
